@@ -60,7 +60,7 @@ class Pets:
         pet_id = Pets().post_pet_save()[0]
         headers = {'Authorization': f'Bearer {my_token}'}
         files = {'pic': (
-            'John.jpg', open(r'C:\Users\darya\pythonProject\PyTests\tests\photo\pet_John.jpg', 'rb'), 'image/jpg')}
+            'John.jpg', open('tests\\photo\\pet_John.jpg', 'rb'), 'image/jpg')}
         res = requests.post(self.base_url + f'pet/{pet_id}/image', headers=headers, files=files)
         status = res.status_code
         link = res.json()['link']
@@ -103,14 +103,13 @@ class Pets:
         return status, pets_list
 
     def get_pet_comment(self) -> json:
-        """Put-запрос к Swagger сайта для редактирования существующего комментария c id 2031 к конкретной карточке
-        питомца 28625 (нет возможности через swagger создать комментарий, поэтому берется существующий из
-        Post/pets -> Get/pet/{id}"""
+        """Put-запрос к Swagger сайта для добавления комментария питомцу"""
         my_token, _, my_id = Pets().get_token()
+        pet_id, _ = Pets().post_pet_save()
         headers = {'Authorization': f'Bearer {my_token}'}
-        data = {'id': 2031, 'pet_id': 28625, 'message': settings.MESSAGE, 'user_id': my_id,
+        data = {'id': 0, 'pet_id': pet_id, 'message': settings.MESSAGE, 'user_id': my_id,
                 'user_name': settings.VALID_EMAIL}
-        res = requests.put(self.base_url + f'pet/{28625}/comment', data=json.dumps(data), headers=headers)
+        res = requests.put(self.base_url + f'pet/{pet_id}/comment', data=json.dumps(data), headers=headers)
         status = res.status_code
         return status
 

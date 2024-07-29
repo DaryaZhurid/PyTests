@@ -77,11 +77,9 @@ def test_get_pets_list():
 
 
 @pytest.mark.regression
-@pytest.mark.xfail
 def test_get_pet_comment():
     status = pet.get_pet_comment()
-    assert status == 200, (f'Нет возможности через swagger создать комментарий, '
-                           f'поэтому берется существующий (см. текст к функции в файле api)')
+    assert status == 200
 
 
 @pytest.mark.regression
