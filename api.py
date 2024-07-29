@@ -107,8 +107,7 @@ class Pets:
         my_token, _, my_id = Pets().get_token()
         pet_id, _ = Pets().post_pet_save()
         headers = {'Authorization': f'Bearer {my_token}'}
-        data = {'id': 0, 'pet_id': pet_id, 'message': settings.MESSAGE, 'user_id': my_id,
-                'user_name': settings.VALID_EMAIL}
+        data = {'message': settings.MESSAGE}
         res = requests.put(self.base_url + f'pet/{pet_id}/comment', data=json.dumps(data), headers=headers)
         status = res.status_code
         return status
